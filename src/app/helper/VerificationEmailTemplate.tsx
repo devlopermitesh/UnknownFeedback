@@ -34,7 +34,7 @@ import {
           />
           <Text style={tertiary}>Verify Your Identity {username}</Text>
           <Heading style={secondary}>
-            Enter the following code to finish linking Venmo.
+           Thank you!for registering with 'UnknownFeedback' here is your OTP:
           </Heading>
           <Section style={codeContainer}>
             <Text style={code}>{otp}</Text>

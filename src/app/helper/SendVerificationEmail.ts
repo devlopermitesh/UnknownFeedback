@@ -5,6 +5,7 @@ import { verifyvalidation } from "../schemas/verifySchema";
 
 export async function SendVerificationEmail(verifyCode:string,username:string,email:string):Promise<ApiResponse>{
 try {
+    console.log(verifyCode,username,email)
     const { data, error } = await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: email,
@@ -15,7 +16,7 @@ try {
         }),
       });
       if(error){
-      return { success: false, message: "Error sending verification email" };
+      return { success: false, message: error.message };
       }
       return { success: true, message: "Verification email sent successfully" };
   

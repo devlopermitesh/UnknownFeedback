@@ -9,6 +9,8 @@ const connection:ConnectionObject = {
 };
 export async function dbConnect():Promise<void> {
     if(connection.isConnected){
+
+
         console.log("already connected");
         return;
     }

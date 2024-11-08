@@ -48,7 +48,7 @@ import {
             if you did not request this code.
           </Text>
         </Container>
-        <Text style={footer}>Securely powered by Plaid.</Text>
+        <Text style={footer}>Securely powered by UnknownFeedback.</Text>
       </Body>
     </Html>
   );

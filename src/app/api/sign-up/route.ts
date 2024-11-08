@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
     try {
         const { email, username, password } = await req.json();
-
+console.log(email,username,password)
         // Check if a verified user with the same username already exists
         const existingUserVerifiedByUsername = await UserModel.findOne({ username, verified: true });
         if (existingUserVerifiedByUsername) {

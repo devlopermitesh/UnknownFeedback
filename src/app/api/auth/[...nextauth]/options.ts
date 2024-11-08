@@ -13,6 +13,7 @@ export const Authoptions:NextAuthOptions={
                 password: { label: "Password", type: "password" }
               },
               async authorize(credentials:any):Promise<any>{
+                console.log("hellow")
                 await dbConnect();
                 try {
                   const user=  await UserModel.findOne({$or:[

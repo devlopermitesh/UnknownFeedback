@@ -25,6 +25,7 @@ export async function GET(req: Request) {
 const {username}=result.data
 
         const existingUserVerifiedByUsername = await UserModel.findOne({ username, verified: true });
+        console.log(existingUserVerifiedByUsername)
         if(existingUserVerifiedByUsername){
 return Response.json({ success: false, message: "Username already exists" }, { status: 400 });
 }

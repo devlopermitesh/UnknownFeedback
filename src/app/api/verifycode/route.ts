@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   try {
     // Parse and validate the request JSON body
     const { username, code } = await req.json();
-
+console.log(username,code)
     // Check if the code meets schema requirements
     const result = VerifyQuerySchema.safeParse({ username, code:{code} });
     if (!result.success) {

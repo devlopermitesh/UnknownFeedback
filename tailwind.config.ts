@@ -12,6 +12,15 @@ const config: Config = {
 		boxShadow: {
 			'custom-shadow': '11px 11px 20px -11px rgba(16,16,18,0.67)',
 		  },
+		  keyframes: {
+			"caret-blink": {
+			  "0%,70%,100%": { opacity: "1" },
+			  "20%,50%": { opacity: "0" },
+			},
+		  },
+		  animation: {
+			"caret-blink": "caret-blink 1.25s ease-out infinite",
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

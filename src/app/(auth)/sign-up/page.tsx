@@ -70,10 +70,10 @@ const Page = () => {
       if (results.data.success) {
         toast({
           title: "Account created successfully",
-          description: "You can now login to your account",
+          description: "please verify your account",
           variant: "default",
         });
-        router.replace(`/verifycode?username=${data.username}`);
+        router.replace(`/verify/${username}`);
       }
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ success: false, message: "failed to uodate accept message status" }), { status: 401 });
  }
 
- return new Response(JSON.stringify({ success: true, message: "Message accepted",updatedUser }), { status: 200 });
+ return new Response(JSON.stringify({ success: true, message: "Message accepted", }), { status: 200 });
    } catch (error) {
     console.log("Error accepting message:", error);
     return new Response(JSON.stringify({ success: false, message: "Error accepting message" }), { status: 500 });

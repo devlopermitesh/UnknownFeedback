@@ -27,7 +27,8 @@ const page = () => {
     console.log("onSubmit is called!");  // Check if the function is getting triggered.
     try {
         console.log("Form Submitted with data:", data);
-        const verifydata = { username, code: data.verifycode };
+        
+        const verifydata = { username, code: { verifycode: data.verifycode } };  
         console.log("Verification Data: ", verifydata);
         const result = await axios.post('/api/verifycode', verifydata);
 
@@ -36,6 +37,7 @@ const page = () => {
                 title: "Account Verified",
                 description: "You can now log in to your account",
                 variant: "default",
+                color:"green"
             });
             router.replace('/sign-in');
         } else {
@@ -43,6 +45,7 @@ const page = () => {
                 title: "Verification Failed",
                 description: result.data.message || "Unknown error during verification",
                 variant: "destructive",
+                color:"red"
             });
         }
     } catch (error) {

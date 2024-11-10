@@ -13,11 +13,13 @@ export interface User extends Document{
 }
 
 export interface Message extends Document{
+    _id:string;
     context:string;
     createdAt:Date;
 }
 
 const MessageSchema:Schema<Message>=new Schema({
+
 context:{
     type:String,
     required:[true,"context is required"]

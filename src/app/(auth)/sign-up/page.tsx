@@ -13,7 +13,6 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import Header from '@/components/ui/custome/Header';
 
 const Page = () => {
   const [username, setUsername] = useState("");
@@ -89,9 +88,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full bg-white border border-solid border-black absolute flex-col">
-      {/* header  */}
-      <Header></Header>
+    <div className="flex justify-center items-center w-full h-full bg-white border border-solid border-black relative flex-col">
       <div className="border-solid p-2 border rounded border-gray-900 shadow-custom-shadow px-10 flex flex-col gap-2">
         {/* Wrap the form with FormProvider */}
         <FormProvider {...methods}> {/* Provide the form context */}
@@ -128,7 +125,7 @@ const Page = () => {
               )}
             />
 
-            <FormField
+<FormField
               control={control}
               name="email"
               render={({ field }) => (
@@ -146,7 +143,7 @@ const Page = () => {
               )}
             />
 
-            <FormField
+<FormField
               control={control}
               name="password"
               render={({ field }) => (

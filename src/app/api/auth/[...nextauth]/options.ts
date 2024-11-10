@@ -9,17 +9,23 @@ export const Authoptions:NextAuthOptions={
             id:"credentials",
             name:"Credentials",
             credentials: {
-                email: { label: "email", type: "text"},
+                username: { label: "Username", type: "text"},
                 password: { label: "Password", type: "password" }
               },
+
               async authorize(credentials:any):Promise<any>{
                 console.log("hellow")
                 await dbConnect();
                 try {
-                  const user=  await UserModel.findOne({$or:[
-                        {email:credentials.identifier},
-                        {username:credentials.identifier}
-                    ]})
+                    console.log(credentials)
+                    // ?? for some reseaon i try to only login with email ,but you can update 1
+                //   const user=  await UserModel.findOne({$or:[
+                //         {email:credentials.identifier},
+                //         {username:credentials.identifier}
+                //     ]})
+                   const user =await UserModel.findOne({username:credentials.username})
+
+
                     if(!user){
 
                         throw new Error("no user found with this email");

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Authprovider from "./context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster"
+import Header from "@/components/ui/custome/Header";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,8 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <Authprovider>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className="flex flex-col h-screen w-screen"
       >
+        <Header/>
         {children}
         <Toaster />
       </body>

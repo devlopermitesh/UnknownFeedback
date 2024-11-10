@@ -20,7 +20,8 @@ export async function POST(req: Request) {
     const { username, code } = await req.json();
 console.log(username,code)
     // Check if the code meets schema requirements
-    const result = VerifyQuerySchema.safeParse({ username, code:{code} });
+    const result = VerifyQuerySchema.safeParse({ username, code });
+    console.log(result);
     if (!result.success) {
       const codeErrors = result.error.format().code?._errors || [];
       console.log("Validation failed:", codeErrors);
@@ -32,6 +33,7 @@ console.log(username,code)
 
     console.log("Valid data, checking user in DB...");
     const user = await UserModel.findOne({ username });
+
     if (!user) {
       console.log("User not found");
       return new Response(
@@ -42,7 +44,7 @@ console.log(username,code)
 
     // Check if the code matches and if it has expired
     const isCodeExpired = new Date() >= new Date(user.verifyExpires);
-    if (user.verifyCode !== code) {
+    if (user.verifyCode !== code.verifycode) {
       console.log("Invalid code");
       return new Response(
         JSON.stringify({ success: false, message: "Invalid code" }),

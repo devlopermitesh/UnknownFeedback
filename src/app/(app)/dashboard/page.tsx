@@ -13,19 +13,15 @@ import MessageCard from '@/components/ui/custome/MessageCard';
 import { Loader2 } from 'lucide-react';
 import {Message} from "../../Models/User"
 import { RefreshCw } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 const page = () => {
   const [isSwitchloading, setisSwitchloading] = React.useState(false);
-  const [messages, setMessages] = React.useState([
-    {
-      _id:"1",
-      context:"hello kya kar rha hai bhai",
-      createdAt:new Date(),
-    }
-  ]);
+  const [messages, setMessages] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 const {toast}=useToast();
 const {data:session}=useSession();
 const form=useForm();
+const router=useRouter();
 const {watch,setValue,register}=form
 const Switch=watch("Switch")
 const baseUrl=`${window.location.origin}`
@@ -79,7 +75,7 @@ const fetchMessages=useCallback(async(refresh:boolean=false)=>{
 },[messages,handleDeleteMessage])
 
 useEffect(()=>{
-if(!session||!session.user) return 
+if(!session||!session.user) router.replace("/sign-in");
   fetchMessages();
   fetchAcceptMessage();
 

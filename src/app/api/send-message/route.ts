@@ -1,7 +1,7 @@
 import { dbConnect } from "@/app/lib/dbConnect";
 import UserModel, { Message } from "@/app/Models/User";
 
-async function Post(req: Request) {
+export async function POST(req: Request) {
 await dbConnect();
 try {
     await dbConnect();
@@ -15,18 +15,17 @@ try {
     if(!user.isAcceptMessage){
         return new Response(JSON.stringify({ success: false, message: "User is not accepting message" }), { status: 403 });
     }
-
     //create message
             const newMessage = {
-                context: messageContent,  
-                createdAt: new Date()    
+                context: messageContent.content,  
+                createdAt: messageContent.createdAt  
             };
     
             user.messages.push(newMessage as Message);
     
             await user.save();
     
-            return { success: true, message: "Message added successfully" };
+            return new Response(JSON.stringify({ success: true, message: "Message sent successfully" }), { status: 200 });
         
 
 } catch (error) {

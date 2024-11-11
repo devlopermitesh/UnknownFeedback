@@ -5,7 +5,7 @@ import { User as TypeUser} from "next-auth"
 import {getServerSession,} from "next-auth"
 import mongoose from "mongoose";
 
-export async function Get(req: Request) {
+export async function GET(req: Request) {
     await dbConnect();
     try {
         const session = await getServerSession(Authoptions);

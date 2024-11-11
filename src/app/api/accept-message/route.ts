@@ -1,7 +1,7 @@
 import { dbConnect } from "@/app/lib/dbConnect";
 import {Authoptions} from "../auth/[...nextauth]/options";
 import UserModel from "@/app/Models/User";
-import {Session, User as TypeUser} from "next-auth"
+import { User as TypeUser} from "next-auth"
 import {getServerSession,} from "next-auth"
 export async function POST(req: Request) {
     await dbConnect();

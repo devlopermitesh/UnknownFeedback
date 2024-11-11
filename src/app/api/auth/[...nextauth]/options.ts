@@ -14,17 +14,15 @@ export const Authoptions:NextAuthOptions={
               },
 
               async authorize(credentials:any):Promise<any>{
-                console.log("hellow")
                 await dbConnect();
                 try {
-                    console.log(credentials)
                     // ?? for some reseaon i try to only login with email ,but you can update 1
                 //   const user=  await UserModel.findOne({$or:[
                 //         {email:credentials.identifier},
                 //         {username:credentials.identifier}
                 //     ]})
                    const user =await UserModel.findOne({username:credentials.username})
-
+console.log(credentials.username)
 
                     if(!user){
 
@@ -53,25 +51,31 @@ export const Authoptions:NextAuthOptions={
     ],
     callbacks:{
         
-    async session({ session, token }) {
-        if(token){
-            session.user._id=token?._id as string|undefined
-            session.user.username=token?.username as string|undefined
-            session.user.isAcceptMessage=token?.isaccepting as boolean|undefined
-            session.user.verified=token.verified as  boolean| undefined
-            
 
-
-        }
-
-        return session
+        async session({ session, token }) {
+            if (token) {
+                // console.log("Session Token:", token);  
+        
+                session.user._id = token._id as string | undefined;
+                session.user.username = token.username as string | undefined;
+                session.user.isAcceptMessage = token.isaccepting as boolean | undefined;
+                session.user.verified = token.verified as boolean | undefined;
+            } else {
+                console.error("Token is undefined in session callback");
+            }
+        
+            return session;
       },
       async jwt({ user,token}) {
-        token._id=user._id?.toString()
-        token.verified=user.verified
-        token.username=user.username?.toString()
-        token.isaccepting=user.isAcceptMessage
-
+        // console.log("hi i am jwt going to use user")
+        // console.log(user)
+        if (user) {
+            token._id = user._id?.toString();
+            token.verified = user.verified;
+            token.username = user.username?.toString();
+            token.isaccepting = user.isAcceptMessage;
+        }
+    
         return token
       }
   

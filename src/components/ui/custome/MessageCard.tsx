@@ -21,9 +21,10 @@ import {
 import { Button } from "../button"
 import { X } from "lucide-react"
 import { Message } from "@/app/Models/User"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useToast } from "../hooks/use-toast"
 import { formatDistanceToNow } from 'date-fns';
+import { ApiResponse } from "@/app/types/ApiResponse"
 interface MessagecardProps{
 Message:Message,
 onMessageDelete:(id:string) => void
@@ -57,22 +58,30 @@ const MessageCard:React.FC<MessagecardProps> = ({Message,onMessageDelete}) => {
     const {toast}=useToast()
     const {_id:messageId} = Message
     const date = new Date(Message.createdAt);
-    console.log(Message)
     const handleDelete = async() => {
     try {
-        
-    const results = await axios.delete(`/api/deleteMessage/${messageId}`);
-        if(results.data.success){
-            toast({
-                title:"message deleted successfully",
-                variant:"default",
-                color:"green"
-            })
-        }
+      const response = await axios.delete(`/api/deleteMessage/${messageId}`);
+      if (response.data.success) {
+          toast({
+              title: "Message deleted successfully",
+              variant: "default",
+              color: "green",
+          });
+      } else {
+          toast({
+              title: "Failed to delete message",
+
+              variant: "default",
+              color: "red",
+          });
+      }
     } catch (error) {
-        console.log("error in deleting message",error);
+        
+      const AxiosError=error as AxiosError<ApiResponse>
+      const errormessage=AxiosError?.response?.data?.message
     toast({
         title:"error in deleting message",
+        description:errormessage,
         variant:"destructive",
         color:"red"
     })

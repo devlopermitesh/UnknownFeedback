@@ -19,18 +19,20 @@ const page = () => {
   const [messages, setMessages] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 const {toast}=useToast();
-const {data:session}=useSession();
+const {data:session,status}=useSession();
+
 const form=useForm();
 const router=useRouter();
 const {watch,setValue,register}=form
 const Switch=watch("Switch")
 const baseUrl=`${window.location.origin}`
   const profileUrl=`${baseUrl}/u/${session?.user?.username}`
-  
 //optimize ui update on delete
-const handleDeleteMessage=useCallback(async(messageId:string)=>{
+const handleDeleteMessage=async(messageId:string)=>{
   setMessages(()=>messages.filter((message :Message)=>message._id!==messageId));
-},[])
+console.log("messages",messages)
+alert("message deleted successfully")
+}
 
 //fetch about message Accepting
 const fetchAcceptMessage=useCallback(async()=>{
@@ -75,12 +77,13 @@ const fetchMessages=useCallback(async(refresh:boolean=false)=>{
 },[messages,handleDeleteMessage])
 
 useEffect(()=>{
-if(!session||!session.user) router.replace("/sign-in");
+
+if(!session||!session.user) return ;
   fetchMessages();
   fetchAcceptMessage();
 
   
-},[])
+},[session])
 //handle on switch change
 const handleSwitchChange=useCallback(async(value:boolean)=>{
   setisSwitchloading(true);
@@ -108,6 +111,10 @@ const useCopyToClipboard=async ()=> {
   await navigator.clipboard.writeText(profileUrl);
   toast({title:"Copied to clipboard",variant:"default",color:"green"})
 }
+
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
 
 return (
     <div className='relative w-full h-full flex flex-col bg-slate-200 space-y-3 overflow-x-hidden'>

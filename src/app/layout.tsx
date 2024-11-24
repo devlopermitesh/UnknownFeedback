@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <Authprovider>
       <body
-      className="flex flex-col h-screen w-screen"
+      className="flex flex-col h-screen w-screen overflow-x-hidden "
       >
         <Header/>
         {children}

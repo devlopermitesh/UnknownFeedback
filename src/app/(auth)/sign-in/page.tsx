@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { toast } = useToast();
   
@@ -28,7 +28,6 @@ const page = () => {
   // Handle form submission
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const results=await signIn("credentials", {  password: data.password,username: data.username,redirect: false });
-    console.log(results);
     
 
     if (results?.error) {
@@ -112,7 +111,7 @@ const page = () => {
         {/* Signup Link */}
         <hr />
         <p className="text-center">
-          Don't have an account?{" "}
+          Don &apos;t have an account?{" "}
           <a href="/sign-up" className="text-blue-500">
             Sign-Up
           </a>
@@ -122,4 +121,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

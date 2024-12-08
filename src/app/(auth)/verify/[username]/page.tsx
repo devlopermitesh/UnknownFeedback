@@ -12,7 +12,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { toast } = useToast();
   const form = useForm({
@@ -98,4 +98,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

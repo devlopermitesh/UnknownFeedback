@@ -10,7 +10,6 @@ import {
     Text,
   } from "@react-email/components";
   import * as React from "react";
-  import favicon from "../favicon.ico"
   interface PlaidVerifyIdentityEmailProps {
     username: string;
     otp: string;
@@ -34,7 +33,7 @@ import {
           />
           <Text style={tertiary}>Verify Your Identity {username}</Text>
           <Heading style={secondary}>
-           Thank you!for registering with 'UnknownFeedback' here is your OTP:
+          Thank you! for registering with &apos;UnknownFeedback&apos; here is your OTP:
           </Heading>
           <Section style={codeContainer}>
             <Text style={code}>{otp}</Text>

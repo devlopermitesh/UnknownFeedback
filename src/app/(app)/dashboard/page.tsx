@@ -14,7 +14,7 @@ import { Loader2 } from 'lucide-react';
 import {Message} from "../../Models/User"
 import { RefreshCw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-const page = () => {
+const Page = () => {
   const [isSwitchloading, setisSwitchloading] = React.useState(false);
   const [messages, setMessages] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -74,7 +74,7 @@ const fetchMessages=useCallback(async(refresh:boolean=false)=>{
    setLoading(false) 
 
   }
-},[messages,handleDeleteMessage])
+},[messages,handleDeleteMessage,toast])
 
 useEffect(()=>{
 
@@ -83,7 +83,7 @@ if(!session||!session.user) return ;
   fetchAcceptMessage();
 
   
-},[session])
+},[session,fetchAcceptMessage, fetchMessages])
 //handle on switch change
 const handleSwitchChange=useCallback(async(value:boolean)=>{
   setisSwitchloading(true);
@@ -153,4 +153,4 @@ return (
   )
 }
 
-export default page
+export default Page

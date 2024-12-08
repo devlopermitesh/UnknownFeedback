@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { Button } from "../button"
 import favicon from "../../../../public/favicon.png"
 import Image from "next/image"
+import Link from "next/link"
 const Header = () => {
   const { data: session, status } = useSession()
   const user:User=session?.user as User
@@ -21,20 +22,20 @@ const Header = () => {
         objectFit="cover"
       />
     </div>
-  <a href="/" className="text-lg font-bold m-2">Unknown Feedback</a>
+  <Link href="/" className="text-lg font-bold m-2">Unknown Feedback</Link>
 </div>
 {
   status === "authenticated" && session ? (
     <div>
-      <a href="/dashboard" className="font-sans text-lg ">Welcome ! {user.name}</a>
+      <Link href="/dashboard"><a className="font-sans text-lg ">Welcome ! {user.name}</a></Link>
     </div>
   ):(
     <div>
-      <a href="/sign-in" className="text-lg font-bold mr-8">
-      <Button className="text-lg font-bold bg-black text-white border-white border-2 border-solid">
-      Sign In
-      </Button>
-      </a>
+      <Link href="/sign-in">
+        <Button className="text-lg font-bold bg-black text-white border-white border-2 border-solid">
+          Sign In
+        </Button>
+      </Link>
     </div>
   )
 }

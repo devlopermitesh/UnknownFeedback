@@ -2,10 +2,10 @@ import { dbConnect } from "@/app/lib/dbConnect";
 import UserModel from "@/app/Models/User";
 import { getServerSession } from "next-auth";
 import { Authoptions } from "../../auth/[...nextauth]/options";
-
-export async function DELETE(req: Request, { params }: { params: { messageId: string } }) {
-    const messageId = params.messageId;
-console.log(messageId)
+import { NextRequest } from 'next/server';
+export async function DELETE(req: NextRequest, { params }: { params: { messageId: string } }) {
+    const dataparams=await params
+    const messageId =dataparams.messageId;
     // Ensure the messageId is valid
     if (!messageId) {
         return new Response(JSON.stringify({ success: false, message: "Message ID is required" }), { status: 400 });

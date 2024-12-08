@@ -24,7 +24,9 @@ const form=useForm();
 const router=useRouter();
 const {watch,setValue,register}=form
 const Switch=watch("Switch")
-const baseUrl=`${window.location.origin}`
+
+const url = typeof window === 'undefined' ? '' : window.location.origin;
+const baseUrl = url || process.env.VERCEL_URL || 'http://localhost:3000';
   const profileUrl=`${baseUrl}/u/${session?.user?.username}`
 //optimize ui update on delete
 // const handleDeleteMessage=async(messageId:string)=>{

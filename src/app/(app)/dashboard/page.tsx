@@ -6,7 +6,6 @@ import axios, { AxiosError } from 'axios';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
-import { useCopyToClipboard } from 'usehooks-ts';
 import { Switch as SwitchComponent } from "@/components/ui/switch"
 import { Label } from '@/components/ui/label';
 import MessageCard from '@/components/ui/custome/MessageCard';
@@ -28,11 +27,15 @@ const Switch=watch("Switch")
 const baseUrl=`${window.location.origin}`
   const profileUrl=`${baseUrl}/u/${session?.user?.username}`
 //optimize ui update on delete
-const handleDeleteMessage=async(messageId:string)=>{
-  setMessages(()=>messages.filter((message :Message)=>message._id!==messageId));
-console.log("messages",messages)
-alert("message deleted successfully")
-}
+// const handleDeleteMessage=async(messageId:string)=>{
+//   setMessages(()=>messages.filter((message :Message)=>message._id!==messageId));
+// console.log("messages",messages)
+// alert("message deleted successfully")
+// }
+const handleDeleteMessage = useCallback(async (messageId: string) => {
+  setMessages((prevMessages) => prevMessages.filter((message: Message) => message._id !== messageId));
+  alert("message deleted successfully");
+}, []); // Using previous state
 
 //fetch about message Accepting
 const fetchAcceptMessage=useCallback(async()=>{
@@ -52,7 +55,7 @@ const fetchAcceptMessage=useCallback(async()=>{
     setisSwitchloading(false);
     setLoading(false);
   }
-},[])
+},[setValue, toast])
 //fetch all message 
 const fetchMessages=useCallback(async(refresh:boolean=false)=>{
   setLoading(true);
@@ -74,7 +77,7 @@ const fetchMessages=useCallback(async(refresh:boolean=false)=>{
    setLoading(false) 
 
   }
-},[messages,handleDeleteMessage,toast])
+},[setMessages,toast])
 
 useEffect(()=>{
 
@@ -106,11 +109,11 @@ const handleSwitchChange=useCallback(async(value:boolean)=>{
 },[isSwitchloading])
 
 
-const useCopyToClipboard=async ()=> {
-  
+const handleCopyToClipboard = async () => {
   await navigator.clipboard.writeText(profileUrl);
-  toast({title:"Copied to clipboard",variant:"default",color:"green"})
-}
+  toast({ title: "Copied to clipboard", variant: "default", color: "green" });
+};
+
 
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -123,7 +126,7 @@ return (
 <h1 className='text-black text-xl font-bold capitalize text-start'>Copy Your Unique Link</h1>
 <span className='w-full h-auto flex justify-center items-center'>
 <input className='w-[90%] h-10 rounded-md mt-2 bg-slate-300 text-black ' defaultValue={profileUrl} readOnly></input>
-<Button onClick={() => useCopyToClipboard()} className='bg-black w-[10%] rounded-md text-white '>Copy </Button>
+<Button onClick={handleCopyToClipboard} className='bg-black w-[10%] rounded-md text-white '>Copy </Button>
 </span>
 <div className="flex items-center space-x-2">
       <SwitchComponent id="copy-mode" {...register("Switch")} checked={Switch} onCheckedChange={handleSwitchChange} disabled={isSwitchloading}/>

@@ -2,15 +2,13 @@ import { dbConnect } from "@/app/lib/dbConnect";
 import UserModel from "@/app/Models/User";
 import { getServerSession } from "next-auth";
 import { Authoptions } from "../../auth/[...nextauth]/options";
-import { NextApiRequest, NextApiResponse } from "next";
 
-// DELETE request handler
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-    const { messageId } = req.query; // Access messageId from query parameters
-
+export async function DELETE(req: Request, { params }: { params: { messageId: string } }) {
+    const messageId = params.messageId;
+console.log(messageId)
     // Ensure the messageId is valid
-    if (!messageId || typeof messageId !== "string") {
-        return res.status(400).json({ success: false, message: "Message ID is required and must be a string" });
+    if (!messageId) {
+        return new Response(JSON.stringify({ success: false, message: "Message ID is required" }), { status: 400 });
     }
 
     // Connect to the database
@@ -20,7 +18,7 @@ export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
     // Get the session to verify the user is authorized
     const session = await getServerSession(Authoptions);
     if (!session || !session.user) {
-        return res.status(401).json({ success: false, message: "Not authorized" });
+        return new Response(JSON.stringify({ success: false, message: "Not authorized" }), { status: 401 });
     }
 
     const userId = session.user._id;
@@ -33,12 +31,12 @@ export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
         );
 
         if (responseDeleteMessage.modifiedCount === 0) {
-            return res.status(404).json({ success: false, message: "Failed to delete message, message does not exist" });
+            return new Response(JSON.stringify({ success: false, message: "Failed to delete message, message does not exist" }), { status: 404 });
         }
 
-        return res.status(200).json({ success: true, message: "Message deleted successfully" });
+        return new Response(JSON.stringify({ success: true, message: "Message deleted successfully" }), { status: 200 });
     } catch (error) {
         console.error("Error in deleting message", error);
-        return res.status(500).json({ success: false, message: "Error in deleting message" });
+        return new Response(JSON.stringify({ success: false, message: "Error in deleting message" }), { status: 500 });
     }
 }

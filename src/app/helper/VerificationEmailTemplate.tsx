@@ -26,7 +26,7 @@ import {
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={favicon.src}
+            src={'https://ibb.co/f1V0n59'}
             width="212"
             height="88"
             alt="Unknown Img"

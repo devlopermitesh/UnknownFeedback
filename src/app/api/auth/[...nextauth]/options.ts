@@ -26,7 +26,7 @@ console.log(credentials.username)
 
                     if(!user){
 
-                        throw new Error("no user found with this email");
+                        throw new Error("no user found with this username");
                     }
                     if(!user.verified){
                         throw new Error("please verify your accound first!")

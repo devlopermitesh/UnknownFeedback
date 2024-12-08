@@ -7,7 +7,7 @@ export async function SendVerificationEmail(verifyCode:string,username:string,em
 try {
     console.log(verifyCode,username,email)
     const { data, error } = await resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: process.env.SENDER_EMAIL ?? 'onboarding@resend.dev',
         to: email,
         subject: 'unknownfeedback! Verify Your Identity',
         react: VerficationEmailTemplate({

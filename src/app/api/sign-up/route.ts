@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     try {
         const { email, username, password } = await req.json();
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const Email_provider = process.env.EMAIL_PROVIDER;
+        const Email_provider = process.env.EMAIL_PROVIDER_SERVICE;
 
         // Function to send verification email based on the provider
         const sendVerification = async (user:any, verifyCode:string, username:string, email:string) => {

@@ -5,9 +5,10 @@ import { verifyvalidation } from "../schemas/verifySchema";
 
 export async function SendVerificationEmail(verifyCode:string,username:string,email:string):Promise<ApiResponse>{
 try {
-    console.log(verifyCode,username,email)
+    console.log("sender email :", process.env.SENDER_EMAIL || 'onboarding@resend.dev');
+
     const { data, error } = await resend.emails.send({
-        from: process.env.SENDER_EMAIL ?? 'onboarding@resend.dev',
+        from: process.env.SENDER_EMAIL || 'onboarding@resend.dev',
         to: email,
         subject: 'unknownfeedback! Verify Your Identity',
         react: VerficationEmailTemplate({

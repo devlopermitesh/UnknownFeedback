@@ -67,6 +67,7 @@ const MessageCard:React.FC<MessagecardProps> = ({Message,onMessageDelete}) => {
               variant: "default",
               color: "green",
           });
+          onMessageDelete(messageId);
       } else {
           toast({
               title: "Failed to delete message",

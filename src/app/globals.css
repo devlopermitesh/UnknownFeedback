@@ -70,3 +70,42 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* styles/globals.css */
+:root{
+  --famousblack: #000000;
+  --famouswhite: #ffffff;
+  }
+  html {
+      scroll-behavior: smooth;
+  }
+  
+  ::-webkit-scrollbar {
+      width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+      background: black;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+      border-radius: 12px;
+      background: linear-gradient(
+          135deg,
+          var(--famousblack),
+          var(--famouswhite),
+          #fff,
+          #fff
+      );
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(
+          135deg,
+          #00ffff,
+          var(--famousorange),
+          var(--famouspink)
+      );
+  }
+  

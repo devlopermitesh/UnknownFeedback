@@ -66,6 +66,7 @@ const Page = () => {
     setIsSubmitting(true);
     try {
       const results = await axios.post("/api/sign-up", data);
+      console.log(results.data);
       if (results.data.success) {
         toast({
           title: "Account created successfully",

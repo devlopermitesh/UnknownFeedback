@@ -21,15 +21,15 @@ const Page = () => {
       verifycode: "",
     },
   });
-  const { username } = useParams<{ username: string }>();
+  const { email } = useParams<{ email: string }>();
 
   const onSubmit = async (data: { verifycode: string }) => {
-    console.log("onSubmit is called!");  // Check if the function is getting triggered.
+    // console.log("onSubmit is called!");  // Check if the function is getting triggered.
     try {
-        console.log("Form Submitted with data:", data);
+        // console.log("Form Submitted with data:", data);
         
-        const verifydata = { username, code: { verifycode: data.verifycode } };  
-        console.log("Verification Data: ", verifydata);
+        const verifydata = { email, code: { verifycode: data.verifycode } };  
+        // console.log("Verification Data: ", verifydata);
         const result = await axios.post('/api/verifycode', verifydata);
 
         if (result.data.success) {

@@ -70,6 +70,10 @@ const Page = () => {
         color: "red",
       });
     }
+    finally{
+      setValue("content", "");
+      setMessage("");
+    }
   };
 
   // Suggest message handler

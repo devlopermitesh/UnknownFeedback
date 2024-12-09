@@ -127,7 +127,7 @@ return (
       <div className='w-screen h-full flex flex-col  justify-center container space-y-3 ms-2'>
 <h1 className='text-black text-xl font-bold capitalize text-start'>Copy Your Unique Link</h1>
 <span className='w-full h-auto flex justify-center items-center'>
-<input className='w-[80%] md:w-[90%] h-10 rounded-md mt-2 bg-slate-300 text-black ' defaultValue={profileUrl} readOnly></input>
+<input className='w-[75%] md:w-[90%] h-10 rounded-md mt-2 bg-slate-300 text-black ' defaultValue={profileUrl} readOnly></input>
 <Button onClick={handleCopyToClipboard} className='bg-black w-[10%] rounded-md text-white '>Copy </Button>
 </span>
 <div className="flex items-center space-x-2">

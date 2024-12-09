@@ -24,16 +24,18 @@ export async function GET(req: Request) {
 
 const {username}=result.data
 
-        const existingUserVerifiedByUsername = await UserModel.findOne({ username, verified: true });
-        console.log(existingUserVerifiedByUsername)
-        if(existingUserVerifiedByUsername){
+        const existingUserVerifiedByUsername = await UserModel.findOne({ username});
+        if(existingUserVerifiedByUsername && existingUserVerifiedByUsername.verified){
 return Response.json({ success: false, message: "Username already exists" }, { status: 400 });
 }
-return Response.json({ success: true, message: "Username available" }, { status: 200 });
+
+
+
+return Response.json({ success: true, message: "Username available",data:existingUserVerifiedByUsername?.email }, { status: 200 });
 
         
     } catch (error) {
-        console.log("errror",error)
+        // console.log("errror",error)
         return Response.json({ success: false, message: "Registering Failed" }, { status: 400 });
     }
 }

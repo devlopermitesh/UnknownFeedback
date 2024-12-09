@@ -16,12 +16,13 @@ export async function POST(req: Request) {
         // Function to send verification email based on the provider
         const sendVerification = async (user:any, verifyCode:string, username:string, email:string) => {
             if (Email_provider === "nodemailer") {
+                // console.log(verifyCode, username, email)
                 return await SendNodemailerVerificationEmail(verifyCode, username, email);
             }
             if (Email_provider === "resend") {
                 return await SendVerificationEmail(verifyCode, username, email);
             }
-            return { success: false, message: "Email provider is not configured properly" };
+            return { success: false, message: "Email provider (service is not configured) is not configured properly" };
         };
 
         // Check if a verified user with the same username already exists
@@ -44,13 +45,16 @@ export async function POST(req: Request) {
                 await userWithEmail.save();
 
                 const emailResponse = await sendVerification(userWithEmail, verifyCode, username, email);
+
                 if (!emailResponse.success) {
                     return NextResponse.json({ message: emailResponse.message, success: false }, { status: 500 });
                 }
+                console.log("email response",emailResponse)
 
                 return NextResponse.json({
                     message: "Verification code resent. Please check your email.",
-                    success: true
+                    success: true,
+                    data:email
                 }, { status: 200 });
             }
         } else {
@@ -72,17 +76,19 @@ export async function POST(req: Request) {
             }
 
             const emailResponse = await sendVerification(newUser, verifyCode, username, email);
+console.log(emailResponse)
+
             if (!emailResponse.success) {
                 return NextResponse.json({ message: emailResponse.message, success: false }, { status: 500 });
             }
-
             return NextResponse.json({
                 message: "User registered successfully! Please verify your code.",
-                success: true
+                success: true,
+                data:email
             }, { status: 200 });
         }
     } catch (error) {
-        console.log("Registering user failed: ", error);
+        // console.log("Registering user failed: ", error);
         return NextResponse.json({ success: false, message: "Registering Failed" }, { status: 400 });
     }
 }

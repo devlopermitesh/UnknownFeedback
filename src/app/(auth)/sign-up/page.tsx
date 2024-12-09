@@ -45,11 +45,11 @@ const Page = () => {
       setUsernameMessage("");
       async function checkUsername(username: string) {
         try {
-          const results = await axios.get(`/usernamecheckunique?username=${username}`);
+          const results = await axios.get(`/api/usernamecheckunique?username=${username}`);
           if (results.data.success) {
             setUsernameMessage(results.data.message);
           }
-          console.log(results.data);
+          // console.log(results.data);
         } catch (error) {
           const axiosError = error as AxiosError<ApiResponse>;
           setUsernameMessage(axiosError.response?.data.message ?? "Error checking username");
@@ -58,6 +58,7 @@ const Page = () => {
         }
       }
       checkUsername(username);
+      
     }
   }, [username]);
 
@@ -66,14 +67,17 @@ const Page = () => {
     setIsSubmitting(true);
     try {
       const results = await axios.post("/api/sign-up", data);
-      console.log(results.data);
+const email= results.data.data
+console.log(results.data)
       if (results.data.success) {
         toast({
           title: "Account created successfully",
           description: "please verify your account",
           variant: "default",
         });
-        router.replace(`/verify/${username}`);
+
+        router.replace(`/verify/${email}`);
+
       }
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;

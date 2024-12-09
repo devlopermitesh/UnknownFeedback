@@ -6,36 +6,41 @@ import { usernamevalidation } from "@/app/schemas/signupSchema";
 
 // Define a schema that checks both `username` and `code`
 const VerifyQuerySchema = z.object({
-  username: usernamevalidation,
+  email: z.string().email(),
   code: verifyvalidation,
 });
 
 export async function POST(req: Request) {
-  console.log("Received request at /api/verifycode");
+  // console.log("Received request at /api/verifycode");
 
   await dbConnect();
 
   try {
     // Parse and validate the request JSON body
-    const { username, code } = await req.json();
-console.log(username,code)
+    const { email, code } = await req.json();
+    // console.log(email, code); // Example: gehlotmitesh63%40gmail.com { verifycode: '329366' }
+  // Decode the email before using it
+  const decodedEmail = decodeURIComponent(email);
+  // console.log("Decoded email:", decodedEmail); // gehlotmitesh63@gmail.com
+
     // Check if the code meets schema requirements
-    const result = VerifyQuerySchema.safeParse({ username, code });
-    console.log(result);
+    const result = VerifyQuerySchema.safeParse({ email:decodedEmail, code });
+    // console.log(result);
+
     if (!result.success) {
-      const codeErrors = result.error.format().code?._errors || [];
+      const codeErrors = result.error.errors.map((error) => error.message);
       console.log("Validation failed:", codeErrors);
       return new Response(
-        JSON.stringify({ success: false, message: codeErrors.join(",") || "Invalid code" }),
+        JSON.stringify({ success: false, message: codeErrors.join(", ") || "Invalid code" }),
         { status: 400 }
       );
     }
 
-    console.log("Valid data, checking user in DB...");
-    const user = await UserModel.findOne({ username });
+    // console.log("Valid data, checking user in DB...");
+    const user = await UserModel.findOne({ email:decodedEmail });
 
     if (!user) {
-      console.log("User not found");
+      // console.log("User not found");
       return new Response(
         JSON.stringify({ success: false, message: "User not found" }),
         { status: 404 }
@@ -45,14 +50,14 @@ console.log(username,code)
     // Check if the code matches and if it has expired
     const isCodeExpired = new Date() >= new Date(user.verifyExpires);
     if (user.verifyCode !== code.verifycode) {
-      console.log("Invalid code");
+      // console.log("Invalid code");
       return new Response(
         JSON.stringify({ success: false, message: "Invalid code" }),
         { status: 400 }
       );
     }
     if (isCodeExpired) {
-      console.log("Code expired");
+      // console.log("Code expired");
       return new Response(
         JSON.stringify({ success: false, message: "Code expired" }),
         { status: 400 }
